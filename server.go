@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"log"
@@ -33,9 +34,7 @@ func decodePingRequest(_ context.Context, r *http.Request) (interface{}, error) 
 }
 
 func encodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
-	r := response.(string)
-	_, err := w.Write([]byte(r))
-	return err
+	return json.NewEncoder(w).Encode(response)
 }
 
 func main() {
